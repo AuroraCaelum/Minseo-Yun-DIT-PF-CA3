@@ -17,6 +17,15 @@ public class Assessment {
     private double totalMarks;
     private double weightage;
 
+    public Assessment(String name, String description, Module module, double marks, double totalMarks, double weightage) {
+        this.name = name;
+        this.description = description;
+        this.module = module;
+        this.marks = marks;
+        this.totalMarks = totalMarks;
+        this.weightage = weightage;
+    }
+
     public String getName() { return this.name; }
     public String getDescription() { return this.description; }
     public Module getModule() { return this.module; }

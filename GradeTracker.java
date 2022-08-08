@@ -40,25 +40,21 @@ public class GradeTracker {
                         break;
                     case "2":
                     case "Delete Students":
-                        System.out.println("Enter the student's studentId");
-                        id = scanner.nextLine();
-                        for (Student student : students) {
-                            if (student.getStudentID().equals(id)) {
-                                String studentName = student.getStudentName();
-                                students.remove(student);
-                                System.out.println("Student " + studentName + " has been deleted");
-                            }
+                        Student temp = findStudent();
+                        if (temp != null) {
+                            System.out.println("Student " + temp.getStudentName() + " has been deleted");
+                            students.remove(temp);
                         }
+                        menuMain();
                         break;
                     case "3":
                     case "Calculate a student's GPA":
-                        System.out.println("Enter the student's studentId");
-                        id = scanner.nextLine();
-                        for (Student student : students) {
-                            if (student.getStudentID().equals(id)) {
-                                System.out.println(student.getStudentName());
-                            }
+                        temp = findStudent();
+                        if (temp != null) {
+                            System.out.println("Name: " + temp.getStudentName());
+                            System.out.println("GPA: " + temp.getGPA());
                         }
+                        menuMain();
                         break;
                     case "0":
                     case "Back to menu":
@@ -73,19 +69,34 @@ public class GradeTracker {
                 switch (input) {
                     case "1":
                     case "Add modules to a student":
-                        System.out.println("Sel 1");
+                        Student temp = findStudent();
+                        if (temp != null) {
+                            System.out.print("Enter the module's name: "); //TODO 중복 핸들링
+                            String moduleName = scanner.nextLine();
+                            System.out.print("Enter the module code: "); //TODO 중복 핸들링
+                            String moduleCode = scanner.nextLine();
+                            System.out.print("Enter the module's description: ");
+                            String moduleDesc = scanner.nextLine();
+                            System.out.print("Enter the module's credit units: ");
+                            int moduleCredit = scanner.nextInt();
+                            temp.addModule(new Module(moduleName, moduleCode, moduleDesc, moduleCredit));
+                        }
+                        menuMain();
                         break;
                     case "2":
                     case "Remove modules from a student":
-                        System.out.println("Sel 2");
+                        moduleMenuHandler(1);
+                        menuMain();
                         break;
                     case "3":
                     case "Calculate Marks":
-                        System.out.println("Sel 3");
+                        moduleMenuHandler(2);
+                        menuMain();
                         break;
                     case "4":
                     case "Calculate Grades":
-                        System.out.println("Sel 4");
+                        moduleMenuHandler(3);
+                        menuMain();
                         break;
                     case "0":
                     case "Back to menu":
@@ -100,11 +111,62 @@ public class GradeTracker {
                 switch (input) {
                     case "1":
                     case "Add assessments to a module":
-                        System.out.println("Sel 1");
+                        Student tempStudent = findStudent();
+                        if (tempStudent != null) {
+                            System.out.print("Enter the module code: ");
+                            String moduleCode = scanner.nextLine();
+                            Module tempModule = tempStudent.findModule(moduleCode);
+                            if (tempModule != null) {
+                                System.out.print("Enter the assessment's name: ");
+                                String assessmentName = scanner.nextLine();
+                                System.out.print("Enter the assessment's description: ");
+                                String assessmentDesc = scanner.nextLine();
+                                System.out.print("Enter the assessment's total marks: ");
+                                double assessmentTotalMarks = scanner.nextDouble();
+                                System.out.print("Enter the assessment's marks: ");
+                                double assessmentMarks = scanner.nextDouble();
+                                while (assessmentMarks > assessmentTotalMarks) {
+                                    System.out.println("Marks can't be greater than total marks");
+                                    System.out.print("Enter the assessment's marks: ");
+                                    assessmentMarks = scanner.nextDouble();
+                                }
+                                System.out.print("Enter the assessment's weightage: ");
+                                double assessmentWeight = scanner.nextDouble();
+                                tempModule.addAssessment(new Assessment(assessmentName, assessmentDesc, tempModule, assessmentMarks, assessmentTotalMarks, assessmentWeight));
+                            }
+                        }
+                        /*System.out.print("Enter the module code: ");
+                        String moduleCode = scanner.nextLine();
+                        for (Module module : Student.allModules) {
+                            if (module.getModuleCode().equals(moduleCode)) {
+                                System.out.print("Enter the assessment name: ");
+                                String asmtName = scanner.nextLine();
+                                System.out.print("Enter the assessment description: ");
+                                String asmtDesc = scanner.nextLine();
+                                System.out.print("Enter the assessment marks: ");
+                                double asmtMarks = scanner.nextDouble();
+                                System.out.print("Enter the assessment total marks: ");
+                                double asmtTotal = scanner.nextDouble();
+                                System.out.print("Enter the assessment weightage: ");
+                                double asmtWeight = scanner.nextDouble();
+                            }
+                        }*/
+                        menuMain();
                         break;
                     case "2":
                     case "Remove assessments in a module":
-                        System.out.println("Sel 2");
+                        tempStudent = findStudent();
+                        if (tempStudent != null) {
+                            System.out.print("Enter the module code: ");
+                            String moduleCode = scanner.nextLine();
+                            Module tempModule = tempStudent.findModule(moduleCode);
+                            if (tempModule != null) {
+                                System.out.print("Enter the assessment's name: ");
+                                String assessmentName = scanner.nextLine();
+                                tempModule.removeAssessment(assessmentName);
+                            }
+                        }
+                        menuMain();
                         break;
                     case "0":
                     case "Back to menu":
@@ -121,5 +183,72 @@ public class GradeTracker {
                 System.out.println("Invalid input");
                 menuMain();
         }
+    }
+
+    public static Student findStudent() { //TODO 사용가능하면 변경 -> return null일때에 대한 핸들링이 가능해야 할 것.
+        Scanner scanner = new Scanner(System.in);
+        boolean exist = false;
+        Student stdTemp = null;
+        System.out.print("Enter the student's studentId: ");
+        String id = scanner.nextLine();
+        for (Student student : students) {
+            if (student.getStudentID().equals(id)) {
+                exist = true;
+                stdTemp = student;
+            }
+        }
+        if (!exist) {
+            System.out.println("Can't find student ID '" + id + "'");
+        }
+        return stdTemp;
+    }
+    public static void moduleMenuHandler(int type) {
+        Student temp = findStudent();
+        if (temp != null) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter the module's code: ");
+            String moduleCode = scanner.nextLine();
+            switch (type) {
+                case 1:
+                    temp.removeModule(moduleCode);
+                    break;
+                case 2:
+                    temp.getModuleMarks(moduleCode);
+                    break;
+                case 3:
+                    temp.getModuleGrades(moduleCode);
+                    break;
+                default:
+                    System.out.println("Unacceptable Type Code");
+                    break;
+            }
+        }
+        /*boolean exist = false;
+        System.out.print("Enter the student's studentId: ");
+        String id = scanner.nextLine();
+        for (Student student : students) {
+            if (student.getStudentID().equals(id)) {
+                exist = true;
+                System.out.print("Enter the module's code: ");
+                String moduleCode = scanner.nextLine();
+                switch (type) {
+                    case 1:
+                        student.removeModule(moduleCode);
+                        break;
+                    case 2:
+                        student.getModuleMarks(moduleCode);
+                        break;
+                    case 3:
+                        student.getModuleGrades(moduleCode);
+                        break;
+                    default:
+                        System.out.println("Unacceptable Type Code");
+                        break;
+                }
+            }
+        }
+        if (!exist) {
+            System.out.println("Can't find student ID '" + id + "'");
+        }*/
     }
 }

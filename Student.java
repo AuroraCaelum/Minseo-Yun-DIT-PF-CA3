@@ -8,25 +8,16 @@
 #              Diploma in Information Technology
 */
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import java.util.ArrayList;
 
 public class Student {
-    //TODO public으로 바꿔도 되는 애들은 변경
+    //YUN("Yun Minseo", "10240311");
     private String name; // name of the student
     private String studentID; // studentID
     private ArrayList<Module> modules; // list of modules the student is taking
-
-    public Student() {
-        this.name = "Empty Name";
-        this.studentID = "Empty StudentID";
-        this.modules = new ArrayList<Module>();
-    }
-
-    public Student(String name) {
-        this.name = name;
-        this.studentID = "Empty StudentID";
-        this.modules = new ArrayList<Module>();
-    }
+    public static ArrayList<Module> allModules = new ArrayList<>();
 
     public Student(String name, String id) {
         this.name = name;
@@ -42,7 +33,34 @@ public class Student {
     }
 
     public void addModule(Module module) {
-        this.modules.add(module);
+        modules.add(module);
+        boolean exist = false;
+        for (Module temp : allModules) {
+            if (temp.getModuleCode().equals(module.getModuleCode())) {
+                exist = true;
+                break;
+            }
+        }
+        if (!exist) {
+            allModules.add(module);
+        }
+    }
+    public void removeModule(String moduleCode) {
+        //modules.removeIf(module -> module.getModuleCode().equals(moduleCode));
+        boolean exist = false;
+        Module temp = null;
+        for (Module module : modules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                exist = true;
+                temp = module;
+            }
+        }
+        if (!exist) {
+            System.out.println("Can't find module code '" + moduleCode + "' in this student");
+        } else {
+            System.out.println("Module '" + temp.getName() + "' has successfully removed.");
+            modules.remove(temp);
+        }
     }
 
     public int getTotalCreditUnits() {
@@ -55,12 +73,10 @@ public class Student {
 
     public double getGPA() {
         double totalWGP = 0;
-        int totalUnit = 0;
         for (Module module : modules) {
             totalWGP += module.getWeightedGradePoints();
-            totalUnit += module.getCreditUnits();
         }
-        return totalWGP / totalUnit;
+        return totalWGP / getTotalCreditUnits();
     }
 
     public String toString() {
@@ -69,5 +85,39 @@ public class Student {
         str += "StudentID: " + this.studentID + "\n";
         str += "Modules: " + this.modules + "\n";
         return str;
+    }
+
+    public void getModuleMarks(String moduleCode) {
+        Module temp = findModule(moduleCode);
+        if (temp != null) {
+            System.out.println("Name: " + this.name);
+            System.out.println("Module Name: " + temp.getName());
+            System.out.println("Earned Total Marks: " + temp.getOverallMarks());
+            System.out.println("Calculated Mark: " + temp.getCalculatedMarks());
+        }
+    }
+
+    public void getModuleGrades(String moduleCode) {
+        Module temp = findModule(moduleCode);
+        if (temp != null) {
+            System.out.println("Name: " + this.name);
+            System.out.println("Module Name: " + temp.getName());
+            System.out.println("Calculated Grade: " + temp.getOverallGrades() + " (" + Module.getGradePoint(temp.getOverallGrades()) + ")");
+        }
+    }
+
+    public Module findModule(String moduleCode) {
+        boolean exist = false;
+        Module temp = null;
+        for (Module module : modules) {
+            if (module.getModuleCode().equals(moduleCode)) {
+                exist = true;
+                temp = module;
+            }
+        }
+        if (!exist) {
+            System.out.println("Can't find module code '" + moduleCode + "' in this student");
+        }
+        return temp;
     }
 }

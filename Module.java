@@ -18,12 +18,28 @@ public class Module {
     private int creditUnits;
     private ArrayList<Assessment> assessments;
 
+    public Module(String name, String moduleCode, String description, int creditUnits) {
+        this.name = name;
+        this.moduleCode = moduleCode;
+        this.description = description;
+        this.creditUnits = creditUnits;
+        this.assessments = new ArrayList<Assessment>();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getModuleCode() {
+        return this.moduleCode;
+    }
+
     public int getCreditUnits() {
         return this.creditUnits;
     }
     public double getOverallMarks() {
         double overall = 0;
-        for (Assessment assessment : assessments) {
+        for (Assessment assessment : assessments) { //TODO assessment 가 없을때에 대한 핸들링
             overall += assessment.getMarks();
         }
         return overall;
@@ -31,14 +47,18 @@ public class Module {
 
     public double getOverallTotalMarks() {
         double overall = 0;
-        for (Assessment assessment : assessments) {
+        for (Assessment assessment : assessments) { //TODO assessment 가 없을때에 대한 핸들링
             overall += assessment.getTotalMarks();
         }
         return overall;
     }
 
+    public double getCalculatedMarks() {
+        return (getOverallMarks() / getOverallTotalMarks()) * 100;
+    }
+
     public String getOverallGrades() {
-        double score = getOverallMarks() / assessments.size();
+        double score = getCalculatedMarks();
         if (score >= 90) {
             return "A+";
         } else if (score >= 80) {
@@ -80,7 +100,6 @@ public class Module {
             case "F":
             case "ABS":
             case "T":
-                return 0.0;
             default:
                 return 0.0;
         }
@@ -89,5 +108,25 @@ public class Module {
     public double getWeightedGradePoints() {
         double gp = Module.getGradePoint(getOverallGrades());
         return gp * creditUnits;
+    }
+
+    public void addAssessment(Assessment assessment) {
+        this.assessments.add(assessment);
+    }
+
+    public void removeAssessment(String assessmentName) {
+        boolean exist = false;
+        Assessment temp = null;
+        for (Assessment assessment : assessments) {
+            if (assessment.getName().equals(assessmentName)) {
+                exist = true;
+                temp = assessment;
+            }
+        }
+        if (!exist) {
+            System.out.println("Can't find assessment name '" + moduleCode + "'");
+        } else {
+            assessments.remove(temp);
+        }
     }
 }
