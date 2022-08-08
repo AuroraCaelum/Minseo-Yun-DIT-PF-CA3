@@ -17,12 +17,18 @@ public class Student {
     private String name; // name of the student
     private String studentID; // studentID
     private ArrayList<Module> modules; // list of modules the student is taking
-    public static ArrayList<Module> allModules = new ArrayList<>();
+    //public static ArrayList<Module> allModules = new ArrayList<>();
 
     public Student(String name, String id) {
         this.name = name;
         this.studentID = id;
         this.modules = new ArrayList<>();
+    }
+
+    public Student(String name, String id, ArrayList<Module> modules) {
+        this.name = name;
+        this.studentID = id;
+        this.modules = modules;
     }
 
     public String getStudentName() {
@@ -34,16 +40,10 @@ public class Student {
 
     public void addModule(Module module) {
         modules.add(module);
-        boolean exist = false;
-        for (Module temp : allModules) {
-            if (temp.getModuleCode().equals(module.getModuleCode())) {
-                exist = true;
-                break;
-            }
-        }
-        if (!exist) {
-            allModules.add(module);
-        }
+    }
+
+    public ArrayList<Module> getModules() {
+        return this.modules;
     }
     public void removeModule(String moduleCode) {
         //modules.removeIf(module -> module.getModuleCode().equals(moduleCode));

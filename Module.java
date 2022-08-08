@@ -37,6 +37,10 @@ public class Module {
     public int getCreditUnits() {
         return this.creditUnits;
     }
+
+    public ArrayList<Assessment> getAssessments() {
+        return this.assessments;
+    }
     public double getOverallMarks() {
         double overall = 0;
         for (Assessment assessment : assessments) { //TODO assessment 가 없을때에 대한 핸들링

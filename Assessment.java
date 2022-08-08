@@ -31,6 +31,8 @@ public class Assessment {
     public Module getModule() { return this.module; }
     public double getMarks() { return this.marks; }
     public double getTotalMarks() { return this.totalMarks; }
+
+    public double getWeightage() { return this.weightage; }
     public double getWeightedMarks() {
         return (marks / totalMarks) * weightage;
     }
