@@ -34,6 +34,10 @@ public class Module {
         return this.moduleCode;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     public int getCreditUnits() {
         return this.creditUnits;
     }
@@ -41,10 +45,11 @@ public class Module {
     public ArrayList<Assessment> getAssessments() {
         return this.assessments;
     }
+
     public double getOverallMarks() {
         double overall = 0;
         for (Assessment assessment : assessments) { //TODO assessment 가 없을때에 대한 핸들링
-            overall += assessment.getMarks();
+            overall += assessment.getWeightedMarks();
         }
         return overall;
     }
@@ -52,7 +57,7 @@ public class Module {
     public double getOverallTotalMarks() {
         double overall = 0;
         for (Assessment assessment : assessments) { //TODO assessment 가 없을때에 대한 핸들링
-            overall += assessment.getTotalMarks();
+            overall += assessment.getWeightedTotalMarks();
         }
         return overall;
     }
@@ -131,6 +136,7 @@ public class Module {
             System.out.println("Can't find assessment name '" + moduleCode + "'");
         } else {
             assessments.remove(temp);
+            System.out.println("Assessment '" + assessmentName + "' has successfully removed");
         }
     }
 }

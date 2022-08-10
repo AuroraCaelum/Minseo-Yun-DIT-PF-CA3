@@ -25,11 +25,11 @@ public class Student {
         this.modules = new ArrayList<>();
     }
 
-    public Student(String name, String id, ArrayList<Module> modules) {
+    /*public Student(String name, String id, ArrayList<Module> modules) {
         this.name = name;
         this.studentID = id;
         this.modules = modules;
-    }
+    }*/
 
     public String getStudentName() {
         return this.name;
@@ -110,7 +110,7 @@ public class Student {
         boolean exist = false;
         Module temp = null;
         for (Module module : modules) {
-            if (module.getModuleCode().equals(moduleCode)) {
+            if (module.getModuleCode().equalsIgnoreCase(moduleCode)) {
                 exist = true;
                 temp = module;
             }

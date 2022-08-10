@@ -36,4 +36,5 @@ public class Assessment {
     public double getWeightedMarks() {
         return (marks / totalMarks) * weightage;
     }
+    public double getWeightedTotalMarks() { return totalMarks * weightage * 0.01; }
 }

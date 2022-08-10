@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gradetracker>
+  <student>
+    <name>Yun Minseo</name>
+    <id>10240311</id>
+    <module>
+      <name>Communications and Networks</name>
+      <code>ITSD003</code>
+      <description>CN</description>
+      <credit>4</credit>
+      <assessment>
+        <name>CA1</name>
+        <description>Continuous Assessment 1 - Quiz</description>
+        <marks>100.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>10.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA2</name>
+        <description>Common Test</description>
+        <marks>90.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>40.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA3</name>
+        <description>Individual Assignments</description>
+        <marks>90.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>40.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA4</name>
+        <description>Continuous Assessment 4 - Quiz</description>
+        <marks>90.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>10.0</weightage>
+      </assessment>
+    </module>
+    <module>
+      <name>Programming Fundamentals</name>
+      <code>ITSD004</code>
+      <description>PF</description>
+      <credit>4</credit>
+      <assessment>
+        <name>CA1</name>
+        <description>Continuous Assessment 1 - Quiz</description>
+        <marks>85.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>10.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA2</name>
+        <description>Common Test</description>
+        <marks>90.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>40.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA3</name>
+        <description>Individual Assignments</description>
+        <marks>90.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>40.0</weightage>
+      </assessment>
+      <assessment>
+        <name>CA4</name>
+        <description>Continuous Assessment 4 - Quiz</description>
+        <marks>100.0</marks>
+        <totalmarks>100.0</totalmarks>
+        <weightage>10.0</weightage>
+      </assessment>
+    </module>
+  </student>
+  <student>
+    <name>Handsome Koh</name>
+    <id>11111111</id>
+    <module>
+      <name>Programming Fundamentals</name>
+      <code>ITSD004</code>
+      <description>PF</description>
+      <credit>4</credit>
+    </module>
+  </student>
+</gradetracker>
