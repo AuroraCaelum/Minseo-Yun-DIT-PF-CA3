@@ -1,4 +1,15 @@
+/*
+# Env       -  JDK 1.8.0_331
+# File      -  AssessmentEnum.java
+# Author    -  Yun Minseo / 10240311
+# Github    -  https://github.com/AuroraCaelum/YunMinseo-ITSD004-PF-CA2
+# Disc      -  Individual Assignment for ITSD004 Programming Fundamentals
+#              SIM Global Education
+#              Diploma in Information Technology
+*/
+
 public enum AssessmentEnum {
+    // Pre-defined Assessment Values
     CA1("CA1", "Continuous Assessment 1 - Quiz", 100, 10),
     CA2("CA2", "Common Test", 100, 40),
     CA3("CA3", "Individual Assignments", 100, 40),

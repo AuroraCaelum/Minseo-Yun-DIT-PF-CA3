@@ -1,4 +1,15 @@
+/*
+# Env       -  JDK 1.8.0_331
+# File      -  ModuleEnum.java
+# Author    -  Yun Minseo / 10240311
+# Github    -  https://github.com/AuroraCaelum/YunMinseo-ITSD004-PF-CA2
+# Disc      -  Individual Assignment for ITSD004 Programming Fundamentals
+#              SIM Global Education
+#              Diploma in Information Technology
+*/
+
 public enum ModuleEnum {
+    // Pre-defined Module Values
     BSP("Programming Fundamentals", "ITSD001", "BSP", 4),
     PS("Problem Solving", "ITSD002", "PS", 4),
     CN("Communications and Networks", "ITSD003", "CN", 4),

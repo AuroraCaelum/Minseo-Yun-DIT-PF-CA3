@@ -1,7 +1,18 @@
+/*
+# Env       -  JDK 1.8.0_331
+# File      -  FileIO.java
+# Author    -  Yun Minseo / 10240311
+# Github    -  https://github.com/AuroraCaelum/YunMinseo-ITSD004-PF-CA2
+# Disc      -  Individual Assignment for ITSD004 Programming Fundamentals
+#              SIM Global Education
+#              Diploma in Information Technology
+*/
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -82,7 +93,6 @@ public class FileIO {
         }
         document.appendChild(root);
 
-        //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         OutputStream outputStream = Files.newOutputStream(Paths.get("data.xml"));
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(outputStream);
@@ -94,7 +104,6 @@ public class FileIO {
         transformer.transform(source, result);
         outputStream.close();
 
-        //System.out.println(new String(outputStream.toByteArray(), StandardCharsets.UTF_8));
         System.out.println("Export successful!");
     }
 
@@ -106,7 +115,9 @@ public class FileIO {
             Document document = builder.parse(file);
             document.getDocumentElement().normalize();
 
-            NodeList studentList = document.getElementsByTagName("student");
+            GradeTracker.getStudents().clear();             // Clear the values in the ArrayList : students
+
+            NodeList studentList = document.getElementsByTagName("student");                // List : <student> tag
             for (int i = 0; i < studentList.getLength(); i++) {
                 Node studentNode = studentList.item(i);
                 if (studentNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -114,7 +125,7 @@ public class FileIO {
                     Student student = new Student(getTagValue("name",element), getTagValue("id",element));
                     GradeTracker.addStudent(student);
 
-                    NodeList moduleList = element.getElementsByTagName("module");
+                    NodeList moduleList = element.getElementsByTagName("module");           // List : <module> tag
                     for (int j = 0; j < moduleList.getLength(); j++) {
                         Node moduleNode = moduleList.item(j);
                         if (moduleNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -122,7 +133,7 @@ public class FileIO {
                             Module module = new Module(getTagValue("name",moduleElement), getTagValue("code",moduleElement), getTagValue("description",moduleElement), Integer.parseInt(getTagValue("credit",moduleElement)));
                             student.addModule(module);
 
-                            NodeList assessmentList = moduleElement.getElementsByTagName("assessment");
+                            NodeList assessmentList = moduleElement.getElementsByTagName("assessment");         // List : <assessment> tag
                             for (int k = 0; k < assessmentList.getLength(); k++) {
                                 Node assessmentNode = assessmentList.item(k);
                                 if (assessmentNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -138,6 +149,8 @@ public class FileIO {
             System.out.println("Import successful!");
         } catch (FileNotFoundException e) {
             System.out.println("[data.xml] file not found!");
+        } catch (SAXParseException e) {                             // If the format of XML file has broken
+            System.out.println("[data.xml] has corrupted.");
         } catch (Exception e) {
             e.printStackTrace();
         }

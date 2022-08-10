@@ -8,28 +8,18 @@
 #              Diploma in Information Technology
 */
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-
 import java.util.ArrayList;
 
 public class Student {
-    //YUN("Yun Minseo", "10240311");
     private String name; // name of the student
     private String studentID; // studentID
     private ArrayList<Module> modules; // list of modules the student is taking
-    //public static ArrayList<Module> allModules = new ArrayList<>();
 
     public Student(String name, String id) {
         this.name = name;
         this.studentID = id;
         this.modules = new ArrayList<>();
     }
-
-    /*public Student(String name, String id, ArrayList<Module> modules) {
-        this.name = name;
-        this.studentID = id;
-        this.modules = modules;
-    }*/
 
     public String getStudentName() {
         return this.name;
@@ -45,12 +35,13 @@ public class Student {
     public ArrayList<Module> getModules() {
         return this.modules;
     }
+
     public void removeModule(String moduleCode) {
         //modules.removeIf(module -> module.getModuleCode().equals(moduleCode));
         boolean exist = false;
         Module temp = null;
         for (Module module : modules) {
-            if (module.getModuleCode().equals(moduleCode)) {
+            if (module.getModuleCode().equalsIgnoreCase(moduleCode)) {
                 exist = true;
                 temp = module;
             }

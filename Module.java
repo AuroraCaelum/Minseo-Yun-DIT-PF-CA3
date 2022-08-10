@@ -11,7 +11,6 @@
 import java.util.ArrayList;
 
 public class Module {
-    //TODO public으로 바꿔도 되는 애들은 변경
     private String name;
     private String moduleCode;
     private String description;
@@ -127,13 +126,13 @@ public class Module {
         boolean exist = false;
         Assessment temp = null;
         for (Assessment assessment : assessments) {
-            if (assessment.getName().equals(assessmentName)) {
+            if (assessment.getName().equalsIgnoreCase(assessmentName)) {
                 exist = true;
                 temp = assessment;
             }
         }
         if (!exist) {
-            System.out.println("Can't find assessment name '" + moduleCode + "'");
+            System.out.println("Can't find assessment name '" + assessmentName + "' in module '" + moduleCode + "'");
         } else {
             assessments.remove(temp);
             System.out.println("Assessment '" + assessmentName + "' has successfully removed");

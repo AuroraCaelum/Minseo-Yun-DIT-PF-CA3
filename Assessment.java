@@ -9,7 +9,6 @@
 */
 
 public class Assessment {
-    //TODO public으로 바꿔도 되는 애들은 변경
     private String name;
     private String description;
     private Module module;
